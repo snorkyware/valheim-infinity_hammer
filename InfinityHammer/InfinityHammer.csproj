@@ -5,66 +5,83 @@
     <LangVersion>preview</LangVersion>
     <nullable>enable</nullable>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- Define your build environment paths in InfinityHammer.csproj.user
+    Example content, assuming you have defined the environment variable VALHEIM_INSTALL:
+    <Project>
+      <PropertyGroup>
+        <PluginsDir>$(VALHEIM_INSTALL)\BepInEx\plugins\InfinityHammer\</PluginsDir>
+        <DestinationDir>$(PluginsDir)</DestinationDir>
+        <BepInExCoreDir>$(VALHEIM_INSTALL)\BepInEx\core\</BepInExCoreDir>
+        <ManagedDir>$(VALHEIM_INSTALL)\valheim_Data\Managed\</ManagedDir>
+        <PublicizedDir>$(ManagedDir)publicized_assemblies\</PublicizedDir>
+      </PropertyGroup>
+    </Project> -->
+    <PluginsDir>..\..\Libs\</PluginsDir>
+    <DestinationDir>$(PluginsDir)</DestinationDir>
+    <BepInExCoreDir>$(PluginsDir)</BepInExCoreDir>
+    <ManagedDir>$(PluginsDir)</ManagedDir>
+    <PublicizedDir>$(PluginsDir)</PublicizedDir>
+  </PropertyGroup>
   <Target Name="CopyDLL" AfterTargets="Build">
-    <Copy
-      SourceFiles="$(TargetDir)$(ProjectName).dll"
-      DestinationFolder="$(ProjectDir)\..\..\Libs" />
-    <Message Text="Copied to Libs folder." Importance="High" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DestinationDir)" />
+    <Copy SourceFiles="$(OutDir)$(ProjectName).pdb" DestinationFolder="$(DestinationDir)" />
+    <Message Text="Copied $(TargetPath) to $(DestinationDir)" Importance="High" />
   </Target>
   <ItemGroup>
     <Reference Include="BepInEx.dll">
-      <HintPath>..\..\Libs\BepinEx.dll</HintPath>
+      <HintPath>$(BepInExCoreDir)BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.dll">
-      <HintPath>..\..\Libs\UnityEngine.dll</HintPath>
+      <HintPath>$(ManagedDir)UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule.dll">
-      <HintPath>..\..\Libs\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(ManagedDir)UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule.dll">
-      <HintPath>..\..\Libs\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>$(ManagedDir)UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI.dll">
-      <HintPath>..\..\Libs\UnityEngine.UI.dll</HintPath>
+      <HintPath>$(ManagedDir)UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule.dll">
-      <HintPath>..\..\Libs\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>$(ManagedDir)UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule.dll">
-      <HintPath>..\..\Libs\UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>$(ManagedDir)UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule.dll">
-      <HintPath>..\..\Libs\UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath>$(ManagedDir)UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
     <Reference Include="0Harmony.dll">
-      <HintPath>..\..\Libs\0Harmony.dll</HintPath>
+      <HintPath>$(BepInExCoreDir)0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx.Harmony.dll">
-      <HintPath>..\..\Libs\BepInEx.Harmony.dll</HintPath>
+      <HintPath>$(BepInExCoreDir)BepInEx.Harmony.dll</HintPath>
     </Reference>
     <Reference Include="SoftReferenceableAssets_publicized.dll">
-      <HintPath>..\..\Libs\SoftReferenceableAssets_publicized.dll</HintPath>
+      <HintPath>$(PublicizedDir)SoftReferenceableAssets_publicized.dll</HintPath>
     </Reference>
     <Reference Include="assembly_valheim_publicized.dll">
-      <HintPath>..\..\Libs\assembly_valheim_publicized.dll</HintPath>
+      <HintPath>$(PublicizedDir)assembly_valheim_publicized.dll</HintPath>
     </Reference>
     <Reference Include="assembly_utils_publicized.dll">
-      <HintPath>..\..\Libs\assembly_utils_publicized.dll</HintPath>
+      <HintPath>$(PublicizedDir)assembly_utils_publicized.dll</HintPath>
     </Reference>
     <Reference Include="assembly_guiutils_publicized.dll">
-      <HintPath>..\..\Libs\assembly_guiutils_publicized.dll</HintPath>
+      <HintPath>$(PublicizedDir)assembly_guiutils_publicized.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\..\Libs\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>$(ManagedDir)Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem">
-      <HintPath>..\..\Libs\Unity.InputSystem.dll</HintPath>
+      <HintPath>$(ManagedDir)Unity.InputSystem.dll</HintPath>
     </Reference>
     <Reference Include="ServerDevcommands.dll">
-      <HintPath>..\..\Libs\ServerDevcommands.dll</HintPath>
+      <HintPath>$(PluginsDir)ServerDevcommands.dll</HintPath>
     </Reference>
     <Reference Include="WorldEditCommands.dll">
-      <HintPath>..\..\Libs\WorldEditCommands.dll</HintPath>
+      <HintPath>$(PluginsDir)WorldEditCommands.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
