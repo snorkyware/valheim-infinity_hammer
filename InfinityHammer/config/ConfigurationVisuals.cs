@@ -2,7 +2,8 @@ using BepInEx.Configuration;
 using HarmonyLib;
 using Service;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public partial class Configuration
 {
 
@@ -63,4 +64,5 @@ public class HidePieceHealth
     if (Configuration.HidePieceHealth)
       __instance.m_pieceHealthRoot.gameObject.SetActive(false);
   }
+}
 }

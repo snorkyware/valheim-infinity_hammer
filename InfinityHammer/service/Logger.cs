@@ -1,6 +1,7 @@
 using BepInEx.Logging;
 
-namespace Service;
+namespace Service
+{
 
 public class Log
 {
@@ -27,4 +28,5 @@ public class Log
   {
     Logger.LogDebug(message);
   }
+}
 }

@@ -1,6 +1,7 @@
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
-public class NoCreator()
+public class NoCreator
 {
   private static readonly int XRaySteamName = "steamName".GetStableHashCode();
   private static readonly int XRaySteamID = "steamID".GetStableHashCode();
@@ -39,4 +40,5 @@ public class NoCreator()
       view.LoadFields();
     }
   }
+}
 }

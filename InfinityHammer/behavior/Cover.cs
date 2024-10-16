@@ -4,7 +4,8 @@ using System.Linq;
 using HarmonyLib;
 using Service;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public static class CoverCheck
 {
   public static Vector3 GetCoverPoint(CraftingStation obj) => obj.m_roofCheckPoint.position;
@@ -63,7 +64,7 @@ public static class CoverCheck
   }
   public static void GetCover(Vector3 position, float limit, bool checkRoof = true, bool minLimit = true)
   {
-    List<string> lines = [];
+    List<string> lines = new();
     Cover.GetCoverForPoint(position, out var percent, out var roof);
     var text = $"{Percent(percent)} cover";
     if (limit > 0)
@@ -87,3 +88,4 @@ public class AddCoverText {
     __instance.m_pieceDescription.text += " " + CoverCheck.CurrentCover;
   }
 }*/
+}

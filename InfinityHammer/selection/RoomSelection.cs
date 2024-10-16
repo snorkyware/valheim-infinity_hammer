@@ -6,7 +6,8 @@ using SoftReferenceableAssets;
 using UnityEngine;
 using WorldEditCommands;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 
 public class RoomSelection : BaseSelection
@@ -115,4 +116,5 @@ public class RoomSelection : BaseSelection
     base.Activate();
     Hammer.SelectEmpty();
   }
+}
 }

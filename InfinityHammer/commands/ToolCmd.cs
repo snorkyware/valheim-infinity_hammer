@@ -1,7 +1,8 @@
 using InfinityHammer;
 using ServerDevcommands;
 using UnityEngine;
-namespace InfinityTools;
+namespace InfinityTools
+{
 
 public class ToolCmdCommand
 {
@@ -29,4 +30,5 @@ public class ToolCmdCommand
     PlaceRotation.Set(Quaternion.identity);
     HammerHelper.Message(args.Context, $"Selected command {tool.Name}.");
   }
+}
 }

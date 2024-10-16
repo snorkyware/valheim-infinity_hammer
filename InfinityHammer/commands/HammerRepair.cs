@@ -1,6 +1,7 @@
 using ServerDevcommands;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerRepairCommand
 {
   public HammerRepairCommand()
@@ -13,4 +14,5 @@ public class HammerRepairCommand
       Helper.GetPlayer().SetupPlacementGhost();
     });
   }
+}
 }

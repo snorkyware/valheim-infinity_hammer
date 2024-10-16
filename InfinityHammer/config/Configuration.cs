@@ -3,7 +3,8 @@ using BepInEx.Configuration;
 using ServerDevcommands;
 using Service;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public partial class Configuration
 {
 #nullable disable
@@ -126,4 +127,5 @@ public static class ZoopMagicMode
   public const string Off = "Off";
   public const string Mild = "Mild";
   public const string Wild = "Wild";
+}
 }

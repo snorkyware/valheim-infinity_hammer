@@ -3,7 +3,8 @@ using HarmonyLib;
 using InfinityTools;
 using ServerDevcommands;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 public static class Hammer
 {
@@ -119,4 +120,5 @@ public class DisableSnapCycleWhenTyping
   {
     if (!__instance.TakeInput()) __instance.m_manualSnapPoint = __state;
   }
+}
 }

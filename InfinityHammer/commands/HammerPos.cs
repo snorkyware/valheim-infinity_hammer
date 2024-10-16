@@ -1,6 +1,7 @@
 using ServerDevcommands;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerPosCommand
 {
   public HammerPosCommand()
@@ -21,4 +22,5 @@ public class HammerPosCommand
       }
     });
   }
+}
 }

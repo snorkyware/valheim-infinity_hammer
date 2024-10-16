@@ -5,7 +5,8 @@ using HarmonyLib;
 using Service;
 using UnityEngine;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 [HarmonyPatch]
 public static class DungeonRooms
@@ -162,7 +163,7 @@ public static class DungeonRooms
 
 
 
-  private static readonly List<DungeonGenerator> Dgs = [];
+  private static readonly List<DungeonGenerator> Dgs = new();
   [HarmonyPatch(typeof(DungeonGenerator), nameof(DungeonGenerator.Awake)), HarmonyPostfix]
   static void DungeonGeneratorAwake(DungeonGenerator __instance) => Dgs.Add(__instance);
   [HarmonyPatch(typeof(DungeonGenerator), nameof(DungeonGenerator.OnDestroy)), HarmonyPostfix]
@@ -193,4 +194,5 @@ public static class DungeonRooms
       }
     }
   }
+}
 }

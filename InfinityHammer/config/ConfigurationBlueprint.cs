@@ -3,7 +3,8 @@ using System.IO;
 using BepInEx;
 using BepInEx.Configuration;
 using Service;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 public partial class Configuration
 {
@@ -26,7 +27,7 @@ public partial class Configuration
   public static ConfigEntry<bool> configSaveBlueprintsToProfile;
   public static bool SaveBlueprintsToProfile => configSaveBlueprintsToProfile.Value;
   public static ConfigEntry<string> configSavedObjectData;
-  public static HashSet<string> SavedObjectData = [];
+  public static HashSet<string> SavedObjectData = new();
   private static void UpdateSavedObjectData()
   {
     SavedObjectData = ParseHashList(configSavedObjectData.Value);
@@ -45,4 +46,5 @@ public partial class Configuration
     configBlueprintSnapPiece = wrapper.Bind(section, "Blueprint snap piece", "", "Piece name that is used as the snap point when saving a blueprint.");
     UpdateSavedObjectData();
   }
+}
 }

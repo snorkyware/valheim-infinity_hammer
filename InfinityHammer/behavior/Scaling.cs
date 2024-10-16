@@ -1,7 +1,8 @@
 using ServerDevcommands;
 using UnityEngine;
-namespace InfinityHammer;
-public class Scaling()
+namespace InfinityHammer
+{
+public class Scaling
 {
   private static readonly ScalingData PieceScaling = new(true, false, true, Vector3.one);
   private static readonly ScalingData ToolScaling = new(false, true, false, new(10f, 0f, 10f));
@@ -14,16 +15,26 @@ public class Scaling()
 }
 
 
-public class ScalingData(bool sanityY, bool minXZ, bool printChanges, Vector3 value)
+public class ScalingData
 {
-  private readonly bool OnlyPositiveHeight = sanityY;
-  private readonly bool MinXZ = minXZ;
-  private Vector3 Value = value;
+  private readonly bool OnlyPositiveHeight;
+  private readonly bool MinXZ;
+  private Vector3 Value;
+  private readonly bool PrintChanges;
+  
   public Vector3 Vec3 => Value;
-  private readonly bool PrintChanges = printChanges;
   public float X => MinXZ ? Mathf.Max(0.25f, Value.x) : Value.x;
   public float Y => Value.y;
   public float Z => MinXZ ? Mathf.Max(0.25f, Value.z) : Value.z;
+  
+  public ScalingData(bool sanityY, bool minXZ, bool printChanges, Vector3 value)
+  {
+    OnlyPositiveHeight = sanityY;
+    MinXZ = minXZ;
+    Value = value;
+    PrintChanges = printChanges;
+  }
+
   public void Print(Terminal terminal)
   {
     if (!PrintChanges) return;
@@ -120,4 +131,5 @@ public class ScalingData(bool sanityY, bool minXZ, bool printChanges, Vector3 va
     if (player.m_placementGhost)
       player.m_placementGhost.transform.localScale = Value;
   }
+}
 }

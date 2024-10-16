@@ -1,7 +1,8 @@
 using BepInEx.Configuration;
 using Service;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 public partial class Configuration
 {
@@ -76,4 +77,5 @@ public partial class Configuration
     redo = wrapper.BindCommand("redo", section, "Redo", new KeyboardShortcut(KeyCode.Keypad9), "Redo actions.");
     grid = wrapper.BindCommand($"hammer_grid {gridPrecision.Value} 0,0,0", section, "Grid", new KeyboardShortcut(KeyCode.None), "Toggles grid.");
   }
+}
 }

@@ -1,7 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
 using InfinityHammer;
 using ServerDevcommands;
 
-namespace InfinityTools;
+namespace InfinityTools
+{
 
 public class ToolImportCommand
 {
@@ -10,7 +13,7 @@ public class ToolImportCommand
     Helper.Command("tool_import", "[hammer/hoe/etc[data] - Imports a new tool.", Execute);
     AutoComplete.Register("tool_import", (int index, int subIndex) =>
     {
-      if (index == 0) return [.. ToolManager.Tools.Keys];
+      if (index == 0) return new List<string>().Concat(ToolManager.Tools.Keys).ToList();
       return ParameterInfo.Create("Tool data");
     });
   }
@@ -23,4 +26,5 @@ public class ToolImportCommand
     var result = ToolManager.Import(equipment, data);
     HammerHelper.Message(args.Context, $"Imported tool {result.name} to {equipment}.");
   }
+}
 }

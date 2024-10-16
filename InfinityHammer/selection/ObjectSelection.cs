@@ -7,7 +7,8 @@ using Service;
 using UnityEngine;
 using WorldEditCommands;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 // This is quite messy because single and multiple objects behave differently.
 // But they have to be the same because selection is changed when zooping.
@@ -17,7 +18,7 @@ public partial class ObjectSelection : BaseSelection
   // So an inactive object is used to store the selected object.
   // This mimics the ZNetScene.m_namedPrefabs behavior.
   private readonly GameObject Wrapper;
-  public List<SelectedObject> Objects = [];
+  public List<SelectedObject> Objects = new();
   public override void Destroy()
   {
     base.Destroy();
@@ -259,7 +260,7 @@ public partial class ObjectSelection : BaseSelection
   protected static void UpdateVisuals(GameObject obj, DataEntry? data)
   {
     if (data == null) return;
-    Dictionary<string, string> pars = [];
+    Dictionary<string, string> pars = new();
     if (data.TryGetString(pars, ZDOVars.s_text, out var signText) && obj.TryGetComponent<Sign>(out var sign))
     {
       sign.m_textWidget.text = signText;
@@ -452,4 +453,5 @@ public partial class ObjectSelection : BaseSelection
     if (!FromBuildMenu)
       Hammer.SelectEmpty();
   }
+}
 }

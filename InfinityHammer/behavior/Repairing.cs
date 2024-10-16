@@ -1,10 +1,12 @@
+using System;
 using System.Linq;
 using HarmonyLib;
 using Service;
 using UnityEngine;
 using WorldEditCommands;
 // Code related to repairing objects.
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 [HarmonyPatch(typeof(Player), nameof(Player.Repair))]
 public class Repair
 {
@@ -43,7 +45,7 @@ public class Repair
     if (result)
     {
       wearNTear.m_lastRepair = Time.time;
-      obj.InvokeRPC(ZNetView.Everybody, "WNTHealthChanged", [obj.GetZDO().GetFloat(ZDOVars.s_health, wearNTear.m_health)]);
+      obj.InvokeRPC(ZNetView.Everybody, "WNTHealthChanged", new{GetFloat = obj.GetZDO().GetFloat(ZDOVars.s_health, wearNTear.m_health)});
     }
     return result;
   }
@@ -112,7 +114,7 @@ public class Repair
   private static bool RepairAnything(Player player)
   {
     var range = Configuration.Range > 0f ? Configuration.Range : player.m_maxPlaceDistance;
-    var hovered = Selector.GetHovered(player, range, [], [], true);
+    var hovered = Selector.GetHovered(player, range, Array.Empty<string>(), Array.Empty<string>(), true);
     if (hovered == null) return false;
     var obj = hovered.Obj;
     UndoHelper.AddEditAction(obj.GetZDO());
@@ -122,7 +124,7 @@ public class Repair
     var name = piece ? piece.m_name : Utils.GetPrefabName(obj.gameObject);
     // Copy paste from the game code.
     piece?.m_placeEffect.Create(obj.transform.position, obj.transform.rotation, null, 1f, -1);
-    player.Message(MessageHud.MessageType.TopLeft, Localization.instance.Localize("$msg_repaired", [name]), 0, null);
+    player.Message(MessageHud.MessageType.TopLeft, Localization.instance.Localize("$msg_repaired", name), 0, null);
     var tool = player.GetRightItem();
     if (tool != null)
     {
@@ -166,4 +168,5 @@ public class AdvancedRepair
     __result = Repair.RepairStructure(__instance.m_nview);
     return false;
   }
+}
 }

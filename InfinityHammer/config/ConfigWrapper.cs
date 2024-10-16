@@ -7,7 +7,8 @@ using InfinityHammer;
 using ServerDevcommands;
 using UnityEngine;
 
-namespace Service;
+namespace Service
+{
 public class ConfigWrapper
 {
 
@@ -108,8 +109,8 @@ public class ConfigWrapper
     context.AddString(message);
     Player.m_localPlayer?.Message(MessageHud.MessageType.TopLeft, message);
   }
-  private readonly Dictionary<string, Action<Terminal, string>> SettingHandlers = [];
-  private readonly List<Action> Binders = [];
+  private readonly Dictionary<string, Action<Terminal, string>> SettingHandlers = new();
+  private readonly List<Action> Binders = new();
   private bool BindsDone = false;
   public void Bind()
   {
@@ -161,7 +162,7 @@ public class ConfigWrapper
       BindsDone = false;
       return;
     }
-    List<string> keys = ["wheel"];
+    List<string> keys = new(){"wheel"};
     // Dirty hack to allow command binds to work without a modifier key.
     if (key.MainKey != KeyCode.None || mode != "command")
       keys.Add(GetKeys(key));
@@ -198,21 +199,21 @@ public class ConfigWrapper
   }
   private static string State(bool value) => value ? "enabled" : "disabled";
   private static string Flag(bool value) => value ? "Removed" : "Added";
-  private static readonly HashSet<string> Truthies = [
+  private static readonly HashSet<string> Truthies = new(){
     "1",
     "t",
     "true",
     "yes",
     "on"
-  ];
+  };
   private static bool IsTruthy(string value) => Truthies.Contains(value);
-  private static readonly HashSet<string> Falsies = [
+  private static readonly HashSet<string> Falsies = new(){
     "0",
     "f",
     "false",
     "no",
     "off"
-  ];
+  };
   private static bool IsFalsy(string value) => Falsies.Contains(value);
 
   private static void Toggle(Terminal context, ConfigEntry<bool> setting, string name, string value)
@@ -297,4 +298,4 @@ public class ConfigWrapper
     AddMessage(context, $"{name} set to {value}.");
   }
 }
-
+}

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using HarmonyLib;
 using InfinityHammer;
 using UnityEngine;
-namespace InfinityTools;
+namespace InfinityTools
+{
 
 public class BuildMenuTool : Piece
 {
@@ -29,7 +30,7 @@ public static class UpdateAvailable
     var hammer = Hammer.Get();
     List<Tool> tools = ToolManager.Get(hammer);
     int tab = 0;
-    Dictionary<int, int> indices = [];
+    Dictionary<int, int> indices = new();
     foreach (var tool in tools)
     {
       tab = tool.TabIndex ?? tab;
@@ -82,4 +83,5 @@ public class ReplaceModifierKeys
     text = text.Replace(ToolManager.CmdMod1, Configuration.ModifierKey1());
     text = text.Replace(ToolManager.CmdMod2, Configuration.ModifierKey2());
   }
+}
 }

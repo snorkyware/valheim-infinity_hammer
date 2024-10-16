@@ -3,7 +3,8 @@ using InfinityHammer;
 using ServerDevcommands;
 using UnityEngine;
 
-namespace InfinityTools;
+namespace InfinityTools
+{
 
 public class ToolExportCommand
 {
@@ -26,4 +27,5 @@ public class ToolExportCommand
     GUIUtility.systemCopyBuffer = result;
     HammerHelper.Message(args.Context, $"Exported tool {tool} to the clipboard.");
   }
+}
 }

@@ -1,6 +1,7 @@
 using System;
 using ServerDevcommands;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerScaleCommand
 {
   private static void Scale(string amountStr, string direction, Action<float> action)
@@ -65,4 +66,5 @@ public class HammerScaleCommand
     CommandAxis(name, "z", (scale) => scale.SetScaleZ);
     Command(name);
   }
+}
 }

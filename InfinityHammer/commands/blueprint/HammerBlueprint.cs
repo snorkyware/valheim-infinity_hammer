@@ -5,7 +5,8 @@ using System.IO;
 using System.Linq;
 using ServerDevcommands;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 #pragma warning disable IDE0046
 public class HammerBlueprintCommand
 {
@@ -136,7 +137,7 @@ public class HammerBlueprintCommand
     AutoComplete.Register("hammer_blueprint", (int index, int subIndex) =>
     {
       if (index == 0) return GetBlueprints();
-      return ["c", "center", "d", "data", "sc", "scale", "s", "snap"];
+      return new(){"c", "center", "d", "data", "sc", "scale", "s", "snap" };
     },
     new() {
       { "scale", (int index) => ParameterInfo.Scale("scale", "Size of the object (if the object can be scaled).", index) },
@@ -145,8 +146,8 @@ public class HammerBlueprintCommand
       { "c", (int index) => ParameterInfo.ObjectIds},
       { "snap", (int index) => ParameterInfo.ObjectIds},
       { "s", (int index) => ParameterInfo.ObjectIds},
-      { "data", (int index) => ["true", "false"]},
-      { "d", (int index) => ["true", "false"]},
+      { "data", (int index) => new(){"true", "false"}},
+      { "d", (int index) => new(){"true", "false"}},
 
     });
     Helper.Command("hammer_blueprint", "[blueprint file] [center=piece] [snap=piece] [scale=x,z,y] [data=true/false] - Selects the blueprint to be placed.", (args) =>
@@ -221,4 +222,5 @@ public class HammerBlueprintPars
         Scale = Parse.Scale(Parse.Split(split[1]));
     }
   }
+}
 }

@@ -1,11 +1,13 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using BepInEx;
 using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using HarmonyLib;
 using InfinityTools;
 using Service;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 [BepInPlugin(GUID, NAME, VERSION)]
 [BepInDependency("com.rolopogo.gizmo.comfy", BepInDependency.DependencyFlags.SoftDependency)]
 [BepInDependency("bruce.valheim.comfymods.gizmo", BepInDependency.DependencyFlags.SoftDependency)]
@@ -166,4 +168,5 @@ public class ChatAwake
     CreateAlias();
     InfinityHammer.Wrapper.Bind();
   }
+}
 }

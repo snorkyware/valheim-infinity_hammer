@@ -1,6 +1,7 @@
 using ServerDevcommands;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerPlaceCommand
 {
   public HammerPlaceCommand()
@@ -11,4 +12,5 @@ public class HammerPlaceCommand
       Hammer.Place();
     });
   }
+}
 }

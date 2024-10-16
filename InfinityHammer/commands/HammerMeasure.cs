@@ -3,10 +3,11 @@ using System.Linq;
 using ServerDevcommands;
 using UnityEngine;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerMeasureCommand
 {
-  private static readonly int[] IgnoredLayers = [LayerMask.NameToLayer("character_trigger"), LayerMask.NameToLayer("viewblock"), LayerMask.NameToLayer("pathblocker")];
+  private static readonly int[] IgnoredLayers = {LayerMask.NameToLayer("character_trigger"), LayerMask.NameToLayer("viewblock"), LayerMask.NameToLayer("pathblocker")};
   public static void CheckWithCollider(GameObject obj)
   {
     if (obj.transform.rotation != Quaternion.identity) return;
@@ -44,4 +45,5 @@ public class HammerMeasureCommand
       HammerHelper.Message(args.Context, "Objects measured.");
     });
   }
+}
 }

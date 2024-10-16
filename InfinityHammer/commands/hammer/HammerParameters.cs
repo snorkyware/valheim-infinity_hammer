@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ServerDevcommands;
 using Service;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public enum Growth
 {
   Default,
@@ -46,12 +48,12 @@ public class HammerParameters
   public bool Interact = true;
   public bool Restrict = true;
   public float Height = 0f;
-  public HashSet<string> Components = [];
+  public HashSet<string> Components = new();
   public Wear Wear = Wear.Default;
   public Growth Growth = Growth.Default;
   public Fall Fall = Fall.Default;
-  public string[] Ignored = [];
-  public string[] Included = [];
+  public string[] Ignored = Array.Empty<string>();
+  public string[] Included = Array.Empty<string>();
 
   public HammerParameters(Terminal.ConsoleEventArgs args)
   {
@@ -128,7 +130,7 @@ public class HammerParameters
     if (Ignored.Length == 0)
       Ignored = Configuration.IgnoredIds;
     else if (Configuration.IgnoredIds.Length > 0)
-      Ignored = [.. Ignored, .. Configuration.IgnoredIds];
+      Ignored = Ignored.Concat(Configuration.IgnoredIds).ToArray();
     if (Radius != null && Depth != null)
       throw new InvalidOperationException($"<color=yellow>circle</color> and <color=yellow>rect</color> parameters can't be used together.");
   }
@@ -136,4 +138,5 @@ public class HammerParameters
   {
     foreach (var value in values) Components.Add(value);
   }
+}
 }

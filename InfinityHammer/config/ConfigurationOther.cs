@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -7,22 +8,23 @@ using BepInEx.Configuration;
 using ServerDevcommands;
 using Service;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 public partial class Configuration
 {
 #nullable disable
 
   public static ConfigEntry<string> configIgnoredRemoveIds;
-  public static string[] RemoveIds = [];
+  public static string[] RemoveIds = Array.Empty<string>();
   public static ConfigEntry<string> configIgnoredIds;
-  public static string[] IgnoredIds = [];
+  public static string[] IgnoredIds = Array.Empty<string>();
   public static ConfigEntry<string> configHammerTools;
-  public static HashSet<string> HammerTools = [];
+  public static HashSet<string> HammerTools = new();
   public static ConfigEntry<string> configMirrorFlip;
-  public static HashSet<int> MirrorFlip = [];
+  public static HashSet<int> MirrorFlip = new();
   public static ConfigEntry<string> configDimensions;
-  public static Dictionary<string, Vector3> Dimensions = [];
+  public static Dictionary<string, Vector3> Dimensions = new();
   public static ConfigEntry<bool> configEnabled;
   public static bool Enabled => configEnabled.Value;
 #nullable enable
@@ -65,17 +67,17 @@ public partial class Configuration
     {
       IgnoredIds = ParseArray(configIgnoredIds.Value);
       RemoveIds = ParseArray(configIgnoredRemoveIds.Value);
-      RemoveIds = [.. RemoveIds, .. IgnoredIds];
+      RemoveIds = RemoveIds.Concat(IgnoredIds).ToArray();
     };
     IgnoredIds = ParseArray(configIgnoredIds.Value);
     configIgnoredRemoveIds = wrapper.BindList(section, "Ignored remove ids", "", "Additional ids that are ignored when removing anything.");
     configIgnoredRemoveIds.SettingChanged += (s, e) =>
     {
       RemoveIds = ParseArray(configIgnoredRemoveIds.Value);
-      RemoveIds = [.. RemoveIds, .. IgnoredIds];
+      RemoveIds = RemoveIds.Concat(IgnoredIds).ToArray();
     };
     RemoveIds = ParseArray(configIgnoredRemoveIds.Value);
-    RemoveIds = [.. RemoveIds, .. IgnoredIds];
+    RemoveIds = RemoveIds.Concat(IgnoredIds).ToArray();
     configHammerTools = wrapper.BindList(section, "Hammer tools", "hammer", "List of hammers.");
     configHammerTools.SettingChanged += (s, e) => UpdateTools();
     UpdateTools();
@@ -83,4 +85,5 @@ public partial class Configuration
     configMirrorFlip.SettingChanged += (s, e) => UpdateMirrorFlip();
     UpdateMirrorFlip();
   }
+}
 }

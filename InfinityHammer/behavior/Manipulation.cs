@@ -6,7 +6,8 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using ServerDevcommands;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 
 [HarmonyPatch(typeof(Player), nameof(Player.FindClosestSnapPoints))]
@@ -224,4 +225,5 @@ public static class Position
     if (Configuration.DisableOffsetMessages) return;
     HammerHelper.Message(terminal, $"Offset set to forward: {Offset.z.ToString("F1", CultureInfo.InvariantCulture)}, up: {Offset.y.ToString("F1", CultureInfo.InvariantCulture)}, right: {Offset.x.ToString("F1", CultureInfo.InvariantCulture)}.");
   }
+}
 }

@@ -1,6 +1,7 @@
 using HarmonyLib;
 // Prevents script error by awake functions trying to do ZNetView stuff.
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 [HarmonyPatch(typeof(BaseAI), nameof(BaseAI.Awake))]
 public class BaseAIAwake
@@ -60,3 +61,4 @@ public class MineRock5_NameFix
   }
 }
 
+}

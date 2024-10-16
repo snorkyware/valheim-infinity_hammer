@@ -1,6 +1,7 @@
 using System;
 using ServerDevcommands;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerAddPieceComponentsCommand
 {
   public HammerAddPieceComponentsCommand()
@@ -34,4 +35,5 @@ public class HammerAddPieceComponentsCommand
       HammerHelper.Message(args.Context, "Piece component added to every prefab.");
     });
   }
+}
 }

@@ -1,6 +1,7 @@
 using System;
 using ServerDevcommands;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerZoomCommand
 {
   private static void Zoom(string amountStr, string direction, Action<float, float> action)
@@ -86,4 +87,5 @@ public class HammerZoomCommand
     CommandAxis(name, "z", (scale) => scale.ZoomZ);
     Command(name);
   }
+}
 }

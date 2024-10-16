@@ -1,6 +1,7 @@
 using System;
 using ServerDevcommands;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerMirrorCommand
 {
   public HammerMirrorCommand()
@@ -14,4 +15,5 @@ public class HammerMirrorCommand
       HammerHelper.Message(args.Context, "Mirrored the selection.");
     });
   }
+}
 }

@@ -6,7 +6,8 @@ using HarmonyLib;
 using ServerDevcommands;
 using Service;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public static class HammerHelper
 {
   public static string GetArgs(string cmd, Terminal.ConsoleEventArgs args) => args.FullLine.Substring(cmd.Length + 1);
@@ -258,7 +259,7 @@ public static class HammerHelper
     else
       return Enum.TryParse<KeyCode>(key, true, out var code) && Input.GetKey(code);
   }
-  private static Dictionary<string, int> PrefabNames = [];
+  private static Dictionary<string, int> PrefabNames = new();
   public static Sprite? FindSprite(string name)
   {
     if (!ZNetScene.instance) return null;
@@ -304,4 +305,11 @@ public class UnregisterRenderers
 {
   // ItemStyles use this and may cause issues for armor and item stands.
   static bool Prefix(MaterialMan __instance, GameObject gameObject) => __instance.m_blocks.ContainsKey(gameObject.GetInstanceID());
+}
+
+#nullable enable
+internal static class Extension
+{
+  public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source, IEqualityComparer<T>? comparer = null) => new(source, comparer);
+}
 }

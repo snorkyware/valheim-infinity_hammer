@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
@@ -6,7 +7,8 @@ using Service;
 using UnityEngine;
 using WorldEditCommands;
 // Code related to removing objects.
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 [HarmonyPatch(typeof(Player), nameof(Player.RemovePiece))]
 public class UnlockRemoveDistance
@@ -68,7 +70,7 @@ public class RemovePiece
 
   private static bool RemoveAnything(Player obj)
   {
-    var hovered = Selector.GetHovered(obj, obj.m_maxPlaceDistance, [], Configuration.RemoveIds);
+    var hovered = Selector.GetHovered(obj, obj.m_maxPlaceDistance, Array.Empty<string>(), Configuration.RemoveIds);
     if (hovered == null) return false;
     obj.m_removeEffects.Create(hovered.Obj.transform.position, Quaternion.identity, null, 1f, -1);
     // Must get attributes before deletion.
@@ -139,4 +141,5 @@ public class PreventCreaturerops
 {
   public static bool Active = false;
   static bool Prefix() => !Active;
+}
 }

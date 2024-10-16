@@ -3,19 +3,27 @@ using Data;
 using HarmonyLib;
 using ServerDevcommands;
 using UnityEngine;
-namespace InfinityHammer;
-
-public class SelectedObject(int prefab, bool scalable, DataEntry? data)
+namespace InfinityHammer
 {
-  public int Prefab = prefab;
-  public DataEntry? Data = data;
-  public bool Scalable = scalable;
+
+public class SelectedObject
+{
+  public readonly int Prefab;
+  public readonly DataEntry? Data;
+  public readonly bool Scalable;
+
+  public SelectedObject(int prefab, bool scalable, DataEntry? data)
+  {
+    Prefab = prefab;
+    Data = data;
+    Scalable = scalable;
+  }
 }
 
 public static class Selection
 {
   public static BaseSelection BaseSelection = new();
-  public static Dictionary<string, BaseSelection> Selections = [];
+  public static Dictionary<string, BaseSelection> Selections = new();
   public static BaseSelection Get() => Selections.TryGetValue(HammerHelper.GetTool(), out var selection) ? selection : BaseSelection;
   public static void Clear()
   {
@@ -174,4 +182,5 @@ public class PlayerOnDestroy
     if (__instance == Player.m_localPlayer)
       Selection.Destroy();
   }
+}
 }

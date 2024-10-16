@@ -1,7 +1,8 @@
 using System;
 using ServerDevcommands;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerRotateCommand
 {
   private static float ParseArgs(string[] values, Func<GameObject, bool> isSquare)
@@ -75,4 +76,5 @@ public class HammerRotateCommand
     });
   }
 
+}
 }

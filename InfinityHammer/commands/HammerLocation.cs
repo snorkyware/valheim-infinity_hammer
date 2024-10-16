@@ -1,7 +1,8 @@
 using System;
 using ServerDevcommands;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerLocationCommand
 {
   private static void PrintSelected(Terminal terminal, GameObject obj)
@@ -43,4 +44,5 @@ public class HammerLocationCommand
       }
     });
   }
+}
 }

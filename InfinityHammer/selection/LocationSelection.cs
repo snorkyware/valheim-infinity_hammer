@@ -6,7 +6,8 @@ using Service;
 using UnityEngine;
 using WorldEditCommands;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 
 public class LocationSelection : BaseSelection
@@ -47,7 +48,7 @@ public class LocationSelection : BaseSelection
     HammerHelper.RemoveZDO(view.GetZDO());
     var data = GetData();
     if (data == null) return;
-    Dictionary<string, string> pars = [];
+    Dictionary<string, string> pars = new();
     if (!data.TryGetInt(pars, ZDOVars.s_location, out var prefab)) return;
     if (!data.TryGetInt(pars, ZDOVars.s_seed, out var seed)) return;
     var location = ZoneSystem.instance.GetLocation(prefab);
@@ -56,7 +57,7 @@ public class LocationSelection : BaseSelection
     var rotation = ghost.transform.rotation;
     CustomizeSpawnLocation.AllViews = Hammer.AllLocationsObjects;
     CustomizeSpawnLocation.RandomDamage = Hammer.RandomLocationDamage;
-    ZoneSystem.instance.SpawnLocation(location, seed, position, rotation, ZoneSystem.SpawnMode.Full, []);
+    ZoneSystem.instance.SpawnLocation(location, seed, position, rotation, ZoneSystem.SpawnMode.Full, new List<GameObject>());
     foreach (var zdo in UndoHelper.GetSpawned())
     {
       if (ZNetScene.instance.m_instances.TryGetValue(zdo, out var spawned))
@@ -71,4 +72,5 @@ public class LocationSelection : BaseSelection
     base.Activate();
     Hammer.SelectEmpty();
   }
+}
 }

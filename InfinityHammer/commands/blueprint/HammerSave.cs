@@ -4,11 +4,13 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using Data;
+using HarmonyLib;
 using ServerDevcommands;
 using Service;
 using UnityEngine;
 using UnityEngine.Rendering;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 
 public class HammerSaveCommand
@@ -16,7 +18,7 @@ public class HammerSaveCommand
 
   private static string GetExtraInfo(GameObject obj, DataEntry data)
   {
-    Dictionary<string, string> pars = [];
+    Dictionary<string, string> pars = new();
     var info = "";
     if (data.TryGetString(pars, ZDOVars.s_text, out var text))
       info = text;
@@ -56,7 +58,7 @@ public class HammerSaveCommand
     }
     if (Selection.Get() is not ObjectSelection selection) return bp;
     var objects = Snapping.GetChildren(obj);
-    Dictionary<string, string> pars = [];
+    Dictionary<string, string> pars = new();
     if (selection.Objects.Count() == 1)
     {
       AddSingleObject(bp, pars, obj, saveData);
@@ -108,24 +110,27 @@ public class HammerSaveCommand
   private static string[] GetPlanBuildFile(Blueprint bp)
   {
     if (Configuration.SimplerBlueprints)
-      return [
-      $"#Center:{bp.CenterPiece}",
-      $"#Pieces",
-      .. bp.Objects.OrderBy(o => o.Prefab).Select(GetPlanBuildObject),
-    ];
-    return [
-      $"#Name:{bp.Name}",
-      $"#Creator:{bp.Creator}",
-      $"#Description:{bp.Description}",
-      $"#Category:InfinityHammer",
-      $"#Center:{bp.CenterPiece}",
-      $"#Coordinates:{HammerHelper.PrintXZY(bp.Coordinates)}",
-      $"#Rotation:{HammerHelper.PrintYXZ(bp.Rotation)}",
-      $"#SnapPoints",
-      .. bp.SnapPoints.Select(GetPlanBuildSnapPoint),
-      $"#Pieces",
-      .. bp.Objects.OrderBy(o => o.Prefab).Select(GetPlanBuildObject),
-    ];
+      return new[]
+      {
+        $"#Center:{bp.CenterPiece}",
+        $"#Pieces",
+      }
+        .Concat(bp.Objects.OrderBy(o => o.Prefab).Select(GetPlanBuildObject)).ToArray();
+    
+      return new[]
+      {
+        $"#Name:{bp.Name}",
+        $"#Creator:{bp.Creator}",
+        $"#Description:{bp.Description}",
+        $"#Category:InfinityHammer",
+        $"#Center:{bp.CenterPiece}",
+        $"#Coordinates:{HammerHelper.PrintXZY(bp.Coordinates)}",
+        $"#Rotation:{HammerHelper.PrintYXZ(bp.Rotation)}",
+        $"#SnapPoints",
+      }
+        .Concat(bp.SnapPoints.Select(GetPlanBuildSnapPoint))
+        .AddItem($"#Pieces")
+        .Concat(bp.Objects.OrderBy(o => o.Prefab).Select(GetPlanBuildObject)).ToArray();
   }
   private static string GetPlanBuildSnapPoint(Vector3 pos)
   {
@@ -157,14 +162,14 @@ public class HammerSaveCommand
     AutoComplete.Register("hammer_save", (int index) =>
     {
       if (index == 0) return ParameterInfo.Create("File name.");
-      return ["c", "center", "d", "data", "p", "profile", "s", "snap"];
+      return new(){"c", "center", "d", "data", "p", "profile", "s", "snap"};
     }, new() {
       { "c", (int index) => ParameterInfo.ObjectIds },
       { "center", (int index) => ParameterInfo.ObjectIds },
-      { "d", (int index) => ["true", "false"] },
-      { "data", (int index) => ["true", "false"] },
-      { "p", (int index) => ["true", "false"] },
-      { "profile", (int index) => ["true", "false"] },
+      { "d", (int index) => new List<string>{"true", "false"} },
+      { "data", (int index) => new List<string>{"true", "false"} },
+      { "p", (int index) => new List<string>{"true", "false"} },
+      { "profile", (int index) => new List<string>{"true", "false"} },
       { "s", (int index) => ParameterInfo.ObjectIds },
       { "snap", (int index) => ParameterInfo.ObjectIds },
     });
@@ -218,4 +223,5 @@ public class HammerSavePars
         Profile = Parse.BoolNull(split[1]) ?? Configuration.SaveBlueprintsToProfile;
     }
   }
+}
 }

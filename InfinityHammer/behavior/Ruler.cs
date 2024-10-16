@@ -6,7 +6,8 @@ using InfinityHammer;
 using ServerDevcommands;
 using Service;
 using UnityEngine;
-namespace InfinityTools;
+namespace InfinityTools
+{
 
 public class RulerParameters
 {
@@ -343,7 +344,7 @@ public class AddExtraInfo
   private static string DescriptionHover()
   {
     if (Ruler.Projector) return "";
-    var hovered = Selector.GetHovered(InfinityHammer.Configuration.Range, [], InfinityHammer.Configuration.IgnoredIds);
+    var hovered = Selector.GetHovered(InfinityHammer.Configuration.Range, Array.Empty<string>(), InfinityHammer.Configuration.IgnoredIds);
     var name = hovered == null ? "" : Utils.GetPrefabName(hovered.gameObject);
     return $"id: {name}";
   }
@@ -377,4 +378,5 @@ public class AddExtraInfo
     if (__instance.m_pieceDescription.text != "") text = "\n" + text;
     __instance.m_pieceDescription.text += text;
   }
+}
 }

@@ -1,10 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using Data;
 using HarmonyLib;
 using UnityEngine;
 // Code related to adding objects.
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 [HarmonyPatch(typeof(Player), nameof(Player.PlacePiece))]
 public class PlacePiece
@@ -28,6 +30,11 @@ public class PlacePiece
     if (!Configuration.Enabled) return;
     Selection.Get().AfterPlace(obj);
   }
+
+  private delegate GameObject GetPrefabDelegate(GameObject obj);
+
+  private delegate void PostprocessDelegate(GameObject obj);
+  
   static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
   {
     return new CodeMatcher(instructions)
@@ -35,14 +42,14 @@ public class PlacePiece
               useEnd: false,
               new CodeMatch(OpCodes.Ldloc_2))
           .Advance(1)
-          .Insert(new CodeInstruction(OpCodes.Call, Transpilers.EmitDelegate(GetPrefab).operand))
+          .Insert(new CodeInstruction(OpCodes.Call, Transpilers.EmitDelegate<GetPrefabDelegate>(GetPrefab).operand))
           .MatchForward(
               useEnd: false,
               new CodeMatch(OpCodes.Ldc_I4_1),
               new CodeMatch(OpCodes.Ret))
           .Advance(-1)
           .Insert(new CodeInstruction(OpCodes.Ldloc_3),
-            new CodeInstruction(OpCodes.Call, Transpilers.EmitDelegate(Postprocess).operand))
+            new CodeInstruction(OpCodes.Call, Transpilers.EmitDelegate<PostprocessDelegate>(Postprocess).operand))
           .InstructionEnumeration();
   }
 }
@@ -113,6 +120,9 @@ public class CustomizeSpawnLocation
         view.gameObject.SetActive(true);
     }
   }
+
+  private delegate void CustomizeDelegate(ZNetView[] views);
+  
   static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
   {
     return new CodeMatcher(instructions)
@@ -122,7 +132,8 @@ public class CustomizeSpawnLocation
                   OpCodes.Stsfld,
                   AccessTools.Field(typeof(WearNTear), nameof(WearNTear.m_randomInitialDamage))))
           .InsertAndAdvance(new CodeInstruction(OpCodes.Ldloc_0))
-          .InsertAndAdvance(new CodeInstruction(OpCodes.Call, Transpilers.EmitDelegate(Customize).operand))
+          .InsertAndAdvance(new CodeInstruction(OpCodes.Call, Transpilers.EmitDelegate<CustomizeDelegate>(Customize).operand))
           .InstructionEnumeration();
   }
+}
 }

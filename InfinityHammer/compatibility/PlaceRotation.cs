@@ -3,7 +3,8 @@ using System.Reflection;
 using HarmonyLib;
 using ServerDevcommands;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public static class PlaceRotation
 {
   public static Assembly? Comfy = null;
@@ -49,7 +50,7 @@ public static class PlaceRotation
     Set(ghost.transform.rotation * rotation);
   }
   private static Type ComfyType() => Comfy!.GetType("ComfyGizmo.RotationManager");
-  private static void ComfySet(Piece piece) => AccessTools.Method(ComfyType(), "MatchPieceRotation").Invoke(null, [piece]);
+  private static void ComfySet(Piece piece) => AccessTools.Method(ComfyType(), "MatchPieceRotation").Invoke(null, new object[]{piece});
   private static GameObject GetReloaded()
   {
     var gizmo = GameObject.Find("GizmoRoot(Clone)");
@@ -68,4 +69,5 @@ public static class PlaceRotation
     var gizmo = GetReloaded();
     if (gizmo) gizmo.transform.rotation = rotation;
   }
+}
 }

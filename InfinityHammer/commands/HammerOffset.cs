@@ -1,7 +1,8 @@
 using System;
 using ServerDevcommands;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerOffsetCommand
 {
   private static void Command(string name, string direction, Action<float> action)
@@ -35,4 +36,5 @@ public class HammerOffsetCommand
       Position.Print(args.Context);
     });
   }
+}
 }

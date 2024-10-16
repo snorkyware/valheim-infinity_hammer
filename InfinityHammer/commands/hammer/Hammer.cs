@@ -5,7 +5,8 @@ using ServerDevcommands;
 using Service;
 using UnityEngine;
 using WorldEditCommands;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerSelect
 {
   private static int WearNumber(Wear wear)
@@ -49,37 +50,37 @@ public class HammerSelect
   }
   public HammerSelect()
   {
-    List<string> named = [
+    List<string> named = new(){
       "freeze", "pick", "scale", "level", "stars", "connect", "health", "type", "include", "ignore", "id", "data",
-    ];
+    };
     if (InfinityHammer.StructureTweaks)
     {
-      List<string> namedStructure = [
+      List<string> namedStructure = new(){
         "growth", "wear", "show", "collision", "interact", "fall", "restrict"
-      ];
+      };
       named.AddRange(namedStructure);
     }
-    List<string> Wears = [
+    List<string> Wears = new(){
       "default",
       "broken",
       "damaged",
       "healthy"
-    ];
-    List<string> Growths = [
+    };
+    List<string> Growths = new(){
       "big",
       "big_bad",
       "default",
       "small",
       "small_bad"
-    ];
-    List<string> Falls = [
+    };
+    List<string> Falls = new(){
       "off",
       "solid",
       "terrain"
-    ];
-    List<string> False = [
+    };
+    List<string> False = new(){
       "false",
-    ];
+    };
     named.Sort();
     AutoComplete.Register("hammer", (int index, int subIndex) =>
     {
@@ -110,7 +111,7 @@ public class HammerSelect
     Helper.Command("hammer", "[object id] - Selects the object to be placed (the hovered object by default).", (args) =>
     {
       HammerParameters pars = new(args);
-      ZNetView[] views = [];
+      ZNetView[] views = {};
       if (pars.Radius != null)
         views = Selector.GetNearby(pars.Included, pars.Components, pars.Ignored, pars.Position, pars.Radius, pars.Height);
       else if (pars.Width != null && pars.Depth != null)
@@ -118,7 +119,7 @@ public class HammerSelect
       else if (args.Length > 1 && !args[1].Contains("=") && !pars.Connect && !pars.Pick && !pars.Freeze)
       {
         var obj = ZNetScene.instance.GetPrefab(args[1]) ?? throw new InvalidOperationException("Object not found.");
-        views = [obj.GetComponent<ZNetView>()];
+        views = new[]{obj.GetComponent<ZNetView>()};
       }
       else
       {
@@ -126,7 +127,7 @@ public class HammerSelect
         if (pars.Connect)
           views = Selector.GetConnected(hovered, pars.Included, pars.Ignored);
         else
-          views = [hovered];
+          views = new[]{hovered};
       }
       if (views.Length == 0) return;
       HammerHelper.Init();
@@ -202,4 +203,5 @@ public class HammerSelect
       PrintSelected(args.Context, ghost);
     });
   }
+}
 }

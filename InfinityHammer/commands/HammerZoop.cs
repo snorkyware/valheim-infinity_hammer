@@ -4,7 +4,8 @@ using System.Linq;
 using ServerDevcommands;
 using UnityEngine;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerZoopCommand
 {
   private static void Command(string direction, string action, string reverse)
@@ -64,7 +65,7 @@ public partial class ObjectSelection : BaseSelection
   private int ZoopsY = 0;
   private int ZoopsZ = 0;
   private Vector3 ZoopOffset = new();
-  private readonly Dictionary<Vector3Int, GameObject> Zoops = [];
+  private readonly Dictionary<Vector3Int, GameObject> Zoops = new();
   public void ZoopReset()
   {
     if (Objects.Count > 1)
@@ -274,4 +275,5 @@ public partial class ObjectSelection : BaseSelection
   }
 
   private int Sign(int value) => value >= 0 ? 1 : -1;
+}
 }

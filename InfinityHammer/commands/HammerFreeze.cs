@@ -1,6 +1,7 @@
 using ServerDevcommands;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerFreezeCommand
 {
   public HammerFreezeCommand()
@@ -21,4 +22,5 @@ public class HammerFreezeCommand
         Position.ToggleFreeze();
     });
   }
+}
 }

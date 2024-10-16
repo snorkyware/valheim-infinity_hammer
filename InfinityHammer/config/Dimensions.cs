@@ -1,4 +1,5 @@
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 public static class DimensionValues
 {
@@ -734,4 +735,5 @@ public static class DimensionValues
 "|yggashoot2,30.32,28.07,26.65" +
 "|yggashoot3,23.45,22.14,29.08" +
 "|yggdrasilroot,43.9,17.71,15.1";
+}
 }

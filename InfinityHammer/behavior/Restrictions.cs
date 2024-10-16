@@ -1,5 +1,6 @@
 using HarmonyLib;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 ///<summary>Disables the resource check.</summary>
 [HarmonyPatch(typeof(Player), nameof(Player.HaveRequirements), typeof(Piece), typeof(Player.RequirementMode))]
 public class HaveRequirements
@@ -69,4 +70,5 @@ public class CheckCanRemovePiece
     if (Configuration.NoCost) __result = true;
     return !Configuration.NoCost;
   }
+}
 }

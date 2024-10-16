@@ -4,7 +4,8 @@ using ServerDevcommands;
 using Service;
 using UnityEngine;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 public class BaseSelection
 {
@@ -68,4 +69,5 @@ public class BaseSelection
     Hammer.SelectRepairIfEmpty();
   }
 
+}
 }

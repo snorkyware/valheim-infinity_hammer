@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using InfinityHammer;
 using ServerDevcommands;
-namespace InfinityTools;
+namespace InfinityTools
+{
 public class ToolShapeCommand
 {
   public ToolShapeCommand()
   {
-    List<string> shapes = [
+    List<string> shapes = new(){
       RulerShape.Circle.ToString(),
       RulerShape.Rectangle.ToString(),
       RulerShape.Square.ToString(),
-    ];
+    };
     AutoComplete.Register("tool_shape", (int index, int subIndex) => index == 0 ? shapes : ParameterInfo.None);
     Helper.Command("tool_shape", "[shape] - Toggles or sets the selection shape.", (args) =>
     {
@@ -38,4 +39,5 @@ public class ToolShapeCommand
       HammerHelper.Message(args.Context, $"Selection shape set to {Ruler.Shape}.");
     });
   }
+}
 }

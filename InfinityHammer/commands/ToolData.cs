@@ -5,7 +5,8 @@ using InfinityHammer;
 using ServerDevcommands;
 using UnityEngine;
 
-namespace InfinityTools;
+namespace InfinityTools
+{
 
 public class ToolData
 {
@@ -312,4 +313,5 @@ hoe:
   command: object tame keys=-<mod1> <area>;object wild keys=<mod1> <area>
 ";
   }
+}
 }

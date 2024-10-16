@@ -1,7 +1,8 @@
 using System;
 using ServerDevcommands;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerMoveCommand
 {
   private static void Command(string direction, Action<Terminal.ConsoleEventArgs, GameObject> action)
@@ -63,4 +64,5 @@ public class HammerMoveCommand
       Position.Print(args.Context);
     });
   }
+}
 }

@@ -6,7 +6,8 @@ using BepInEx;
 using HarmonyLib;
 using ServerDevcommands;
 using Service;
-namespace InfinityTools;
+namespace InfinityTools
+{
 
 [HarmonyPatch]
 public class ToolManager
@@ -39,7 +40,7 @@ public class ToolManager
   public static void Add(string equipment, ToolData tool)
   {
     if (!ToolData.ContainsKey(equipment))
-      ToolData.Add(equipment, []);
+      ToolData.Add(equipment, new());
     ToolData[equipment].Add(tool);
     ToFile();
   }
@@ -53,8 +54,8 @@ public class ToolManager
     var yaml = Yaml.Serializer().Serialize(tool).Replace("\r\n", "\\n").Replace("\n", "\\n");
     return $"tool_import {equipment} {yaml}";
   }
-  private static Dictionary<string, List<ToolData>> ToolData = [];
-  public static Dictionary<string, List<Tool>> Tools = [];
+  private static Dictionary<string, List<ToolData>> ToolData = new();
+  public static Dictionary<string, List<Tool>> Tools = new();
   public static bool TryGetTool(string equipment, string name, out Tool tool)
   {
     tool = null!;
@@ -92,7 +93,7 @@ public class ToolManager
     }
     return false;
   }
-  public static List<Tool> Get(string equipment) => Tools.TryGetValue(equipment, out var tools) ? tools : [];
+  public static List<Tool> Get(string equipment) => Tools.TryGetValue(equipment, out var tools) ? tools : new();
   public static List<Tool> GetAll() => Tools.SelectMany(kvp => kvp.Value).ToList();
   public static void FromFile()
   {
@@ -124,4 +125,5 @@ public class ToolManager
   {
     Yaml.SetupWatcher(Pattern, FromFile);
   }
+}
 }

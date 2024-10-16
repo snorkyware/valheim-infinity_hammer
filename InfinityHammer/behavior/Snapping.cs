@@ -5,7 +5,8 @@ using System.Linq;
 using ServerDevcommands;
 using UnityEngine;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 public static class Snapping
 {
@@ -13,7 +14,7 @@ public static class Snapping
   public static bool IsSnapPoint(Transform tr) => IsSnapPoint(tr.gameObject);
   public static List<GameObject> GetChildren(GameObject obj)
   {
-    List<GameObject> children = [];
+    List<GameObject> children = new();
     foreach (Transform tr in obj.transform)
     {
       if (IsSnapPoint(tr)) continue;
@@ -23,7 +24,7 @@ public static class Snapping
   }
   public static List<GameObject> GetSnapPoints(GameObject obj)
   {
-    List<GameObject> snapPoints = [];
+    List<GameObject> snapPoints = new();
     foreach (Transform tr in obj.transform)
     {
       if (IsSnapPoint(tr)) snapPoints.Add(tr.gameObject);
@@ -84,10 +85,10 @@ public static class Snapping
   public static void GenerateSnapPoints(GameObject obj) => CreateSnapPoints(obj, GenerateSnapPoints(GetChildren(obj)));
   public static List<Vector3> GenerateSnapPoints(List<GameObject> objects)
   {
-    if (objects.Count == 0) return [];
+    if (objects.Count == 0) return new List<Vector3>();
     if (Configuration.Snapping == SnappingMode.Off)
     {
-      List<Vector3> snapPoints = [];
+      List<Vector3> snapPoints = new();
       GetSnapPoints(objects[0], snapPoints);
       return snapPoints;
     }
@@ -100,7 +101,7 @@ public static class Snapping
 
   private static List<Vector3> SearchSnapPoints(List<GameObject> objects)
   {
-    List<Vector3> snapPoints = [];
+    List<Vector3> snapPoints = new();
     foreach (var child in objects)
     {
       if (IsSnapPoint(child)) continue;
@@ -123,19 +124,19 @@ public static class Snapping
 
   private static List<Vector3> FindOuterPoints(List<Vector3> snapPoints)
   {
-    if (snapPoints.Count == 0) return [];
+    if (snapPoints.Count == 0) return new List<Vector3>();
     float left = float.MaxValue;
     float right = float.MinValue;
     float front = float.MaxValue;
     float back = float.MinValue;
     float top = float.MinValue;
     float bottom = float.MaxValue;
-    List<Vector3> lefts = [];
-    List<Vector3> rights = [];
-    List<Vector3> fronts = [];
-    List<Vector3> backs = [];
-    List<Vector3> tops = [];
-    List<Vector3> bottoms = [];
+    List<Vector3> lefts = new();
+    List<Vector3> rights = new();
+    List<Vector3> fronts = new();
+    List<Vector3> backs = new();
+    List<Vector3> tops = new();
+    List<Vector3> bottoms = new();
     foreach (var pos in snapPoints)
     {
       if (Helper.Approx(pos.x, left))
@@ -145,7 +146,7 @@ public static class Snapping
       else if (pos.x < left)
       {
         left = pos.x;
-        lefts = [pos];
+        lefts = new(){pos};
       }
 
       if (Helper.Approx(pos.x, right))
@@ -155,7 +156,7 @@ public static class Snapping
       else if (pos.x > right)
       {
         right = pos.x;
-        rights = [pos];
+        rights = new(){pos};
       }
 
       if (Helper.Approx(pos.z, front))
@@ -165,7 +166,7 @@ public static class Snapping
       else if (pos.z < front)
       {
         front = pos.z;
-        fronts = [pos];
+        fronts = new(){pos};
       }
 
       if (Helper.Approx(pos.z, back))
@@ -175,7 +176,7 @@ public static class Snapping
       else if (pos.z > back)
       {
         back = pos.z;
-        backs = [pos];
+        backs = new(){pos};
       }
 
       if (Helper.Approx(pos.y, top))
@@ -185,7 +186,7 @@ public static class Snapping
       else if (pos.y > top)
       {
         top = pos.y;
-        tops = [pos];
+        tops = new(){pos};
       }
 
       if (Helper.Approx(pos.y, bottom))
@@ -195,10 +196,18 @@ public static class Snapping
       else if (pos.y < bottom)
       {
         bottom = pos.y;
-        bottoms = [pos];
+        bottoms = new(){pos};
       }
     }
-    return UniquePoints([.. lefts, .. rights, .. fronts, .. backs, .. tops, .. bottoms]);
+    
+    var points = new List<Vector3>(lefts.Count + rights.Count + fronts.Count + backs.Count + tops.Count + bottoms.Count);
+    points.AddRange(lefts);
+    points.AddRange(rights);
+    points.AddRange(fronts);
+    points.AddRange(backs);
+    points.AddRange(tops);
+    points.AddRange(bottoms);
+    return UniquePoints(points);
   }
 
   private static List<Vector3> CornerSnap(List<Vector3> snapPoints)
@@ -213,7 +222,7 @@ public static class Snapping
     var corner6 = points.OrderBy(p => -p.Item1.x + p.Item1.y - p.Item1.z).First().Item2;
     var corner7 = points.OrderBy(p => -p.Item1.x - p.Item1.y + p.Item1.z).First().Item2;
     var corner8 = points.OrderBy(p => -p.Item1.x - p.Item1.y - p.Item1.z).First().Item2;
-    return UniquePoints([corner1, corner2, corner3, corner4, corner5, corner6, corner7, corner8]);
+    return UniquePoints(new List<Vector3>{corner1, corner2, corner3, corner4, corner5, corner6, corner7, corner8});
   }
   // Goal is to get the farthest point on each edge. This is not perfect but should work for most cases.
   private static List<Vector3> EdgeSnap(List<Vector3> snapPoints)
@@ -225,12 +234,12 @@ public static class Snapping
     float back = float.MinValue;
     float top = float.MinValue;
     float bottom = float.MaxValue;
-    List<Vector3> leftPoints = [];
-    List<Vector3> rightPoints = [];
-    List<Vector3> frontPoints = [];
-    List<Vector3> backPoints = [];
-    List<Vector3> topPoints = [];
-    List<Vector3> bottomPoints = [];
+    List<Vector3> leftPoints = new();
+    List<Vector3> rightPoints = new();
+    List<Vector3> frontPoints = new();
+    List<Vector3> backPoints = new();
+    List<Vector3> topPoints = new();
+    List<Vector3> bottomPoints = new();
     foreach (var pos in snapPoints)
     {
       if (Helper.Approx(pos.x, left))
@@ -238,7 +247,7 @@ public static class Snapping
       else if (pos.x < left)
       {
         left = pos.x;
-        leftPoints = [pos];
+        leftPoints = new(){pos};
       }
 
       if (Helper.Approx(pos.x, right))
@@ -246,7 +255,7 @@ public static class Snapping
       else if (pos.x > right)
       {
         right = pos.x;
-        rightPoints = [pos];
+        rightPoints = new(){pos};
       }
 
       if (Helper.Approx(pos.z, front))
@@ -254,7 +263,7 @@ public static class Snapping
       else if (pos.z < front)
       {
         front = pos.z;
-        frontPoints = [pos];
+        frontPoints = new(){pos};
       }
 
       if (Helper.Approx(pos.z, back))
@@ -262,7 +271,7 @@ public static class Snapping
       else if (pos.z > back)
       {
         back = pos.z;
-        backPoints = [pos];
+        backPoints = new(){pos};
       }
 
       if (Helper.Approx(pos.y, top))
@@ -270,7 +279,7 @@ public static class Snapping
       else if (pos.y > top)
       {
         top = pos.y;
-        topPoints = [pos];
+        topPoints = new(){pos};
       }
 
       if (Helper.Approx(pos.y, bottom))
@@ -278,7 +287,7 @@ public static class Snapping
       else if (pos.y < bottom)
       {
         bottom = pos.y;
-        bottomPoints = [pos];
+        bottomPoints = new(){pos};
       }
     }
 
@@ -288,7 +297,7 @@ public static class Snapping
     Vector3 backPoint = FindCenter(backPoints);
     Vector3 topPoint = FindCenter(topPoints);
     Vector3 bottomPoint = FindCenter(bottomPoints);
-    List<Vector3> points = [leftPoint, rightPoint, frontPoint, backPoint, topPoint, bottomPoint];
+    List<Vector3> points = new(){leftPoint, rightPoint, frontPoint, backPoint, topPoint, bottomPoint};
     // For two dimensional structures like walls two edges would get snap points middle of the wall.
     // So makes sense to ignore those edges.
     Bounds bounds = new();
@@ -298,16 +307,16 @@ public static class Snapping
     bool ignoreZ = Helper.Approx(bounds.size.z, 0);
     bool ignoreY = Helper.Approx(bounds.size.y, 0);
 
-    if (ignoreX) return UniquePoints([frontPoint, backPoint, topPoint, bottomPoint]);
-    if (ignoreZ) return UniquePoints([leftPoint, rightPoint, topPoint, bottomPoint]);
-    if (ignoreY) return UniquePoints([leftPoint, rightPoint, frontPoint, backPoint]);
-    return UniquePoints([leftPoint, rightPoint, frontPoint, backPoint, topPoint, bottomPoint]);
+    if (ignoreX) return UniquePoints(new(){frontPoint, backPoint, topPoint, bottomPoint});
+    if (ignoreZ) return UniquePoints(new(){leftPoint, rightPoint, topPoint, bottomPoint});
+    if (ignoreY) return UniquePoints(new(){leftPoint, rightPoint, frontPoint, backPoint});
+    return UniquePoints(new(){leftPoint, rightPoint, frontPoint, backPoint, topPoint, bottomPoint});
   }
 
   private static List<Vector3> UniquePoints(List<Vector3> points)
   {
     // Very inefficient but not many snap points.
-    List<Vector3> unique = [];
+    List<Vector3> unique = new();
     foreach (var pos in points)
     {
       if (unique.Any(p => Helper.Approx(p.x, pos.x) && Helper.Approx(p.y, pos.y) && Helper.Approx(p.z, pos.z))) continue;
@@ -324,4 +333,5 @@ public static class Snapping
     center /= snapPoints.Count;
     return snapPoints.OrderBy(p => (p - center).sqrMagnitude).First();
   }
+}
 }

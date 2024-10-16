@@ -1,6 +1,7 @@
 using System.Runtime.Remoting.Messaging;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 
 public class CustomHealth
 {
@@ -309,4 +310,5 @@ public class CustomHealth
     wear.m_healthPercentage = zdo.GetFloat(ZDOVars.s_health, wear.m_health) / wear.m_health;
     wear.SetHealthVisual(wear.m_healthPercentage, false);
   }
+}
 }

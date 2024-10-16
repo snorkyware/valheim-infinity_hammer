@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using ServerDevcommands;
 using Service;
 using UnityEngine;
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerRoomCommand
 {
   private static void PrintSelected(Terminal terminal, GameObject obj)
@@ -17,7 +19,7 @@ public class HammerRoomCommand
     AutoComplete.Register("hammer_room", (int index, int subIndex) =>
     {
       if (index == 0) return ParameterInfo.RoomIds;
-      if (index == 1) return ["true", "false"];
+      if (index == 1) return new(){"true", "false"};
       return ParameterInfo.None;
     });
     Helper.Command("hammer_room", "[room id] [empty_room] - Selects the room to be placed.", (args) =>
@@ -38,4 +40,5 @@ public class HammerRoomCommand
       }
     });
   }
+}
 }

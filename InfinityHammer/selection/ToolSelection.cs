@@ -7,7 +7,8 @@ using ServerDevcommands;
 using Service;
 using UnityEngine;
 
-namespace InfinityTools;
+namespace InfinityTools
+{
 public class ToolSelection : BaseSelection
 {
   public Tool Tool;
@@ -91,7 +92,7 @@ public class ToolSelection : BaseSelection
 
     if (command.Contains("<id>"))
     {
-      var hovered = Selector.GetHovered(InfinityHammer.Configuration.Range, [], InfinityHammer.Configuration.IgnoredIds);
+      var hovered = Selector.GetHovered(InfinityHammer.Configuration.Range, Array.Empty<string>(), InfinityHammer.Configuration.IgnoredIds);
       if (hovered == null)
       {
         Helper.AddError(Console.instance, "Nothing is being hovered.", true);
@@ -162,4 +163,5 @@ public class PlacedCommand : MonoBehaviour
       Console.instance.TryRunCommand(Command);
     Destroy(gameObject);
   }
+}
 }

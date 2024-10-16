@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-namespace InfinityTools;
+namespace InfinityTools
+{
 
 public abstract class BaseRuler : MonoBehaviour
 {
@@ -47,7 +48,7 @@ public abstract class BaseRuler : MonoBehaviour
     CreateOffsetLines();
   }
 
-  protected List<GameObject> Segments = [];
+  protected List<GameObject> Segments = new();
   protected void CreateSegments(int count)
   {
     if (Segments.Count == count) return;
@@ -77,7 +78,7 @@ public abstract class BaseRuler : MonoBehaviour
 
   // Offset is simply copy of the actual segments, so no special implementation is needed.
   public static float Offset = 0f;
-  private readonly List<GameObject> OffsetSegments = [];
+  private readonly List<GameObject> OffsetSegments = new();
   private void CreateOffsetSegments(int count)
   {
     if (Mathf.Approximately(Offset, 0f)) count = 0;
@@ -235,4 +236,5 @@ public class RectangleRuler : BaseRuler
       EdgeFix(index, percent, size, start, end, Vector3.left);
     }
   }
+}
 }

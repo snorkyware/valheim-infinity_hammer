@@ -4,7 +4,8 @@ using InfinityHammer;
 using Service;
 using UnityEngine;
 
-namespace InfinityTools;
+namespace InfinityTools
+{
 public partial class ConfigurationLegacy
 {
 #nullable disable
@@ -66,4 +67,5 @@ public partial class ConfigurationLegacy
     commandHeight = wrapper.BindWheelCommand(() => $"hammer_zoom_y {commandHeightAmount.Value}", section, "Command height (mouse wheel)", new KeyboardShortcut(KeyCode.LeftShift), "Changes the command height.", "command");
     commandRotate = wrapper.BindWheelCommand("hammer_rotate", section, "Command rotation (mouse wheel)", new KeyboardShortcut(KeyCode.LeftShift, KeyCode.LeftControl), "Changes the command rotation.", "command");
   }
+}
 }

@@ -1,6 +1,7 @@
 using ServerDevcommands;
 
-namespace InfinityHammer;
+namespace InfinityHammer
+{
 public class HammerGridCommand
 {
   public HammerGridCommand()
@@ -20,4 +21,5 @@ public class HammerGridCommand
       HammerHelper.Message(args.Context, Grid.Enabled ? $"Grid {precision} enabled." : "Grid disabled.");
     });
   }
+}
 }
