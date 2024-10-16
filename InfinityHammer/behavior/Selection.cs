@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using Data;
 using HarmonyLib;
 using ServerDevcommands;
@@ -111,46 +112,24 @@ public class SetItemHack
 }
 
 // This is invasive but simplifies the mod when normal selection can be handled the same way.
-[HarmonyPatch(typeof(PieceTable), nameof(PieceTable.SetSelected))]
+[HarmonyPatch]
 public class PieceTableSetSelected
 {
-  static void Prefix() => Selection.Clear();
-  static void Postfix(PieceTable __instance)
+  static IEnumerable<MethodBase> TargetMethods()
   {
-    var index = __instance.GetSelectedIndex();
-    var piece = __instance.GetPiece((int)__instance.m_selectedCategory, index);
-    if (piece && piece.GetComponent<ZNetView>())
-      Selection.CreateGhost(new ObjectSelection(piece, false));
+    var type = typeof(PieceTable);
+    foreach(var methodName in new[]
+      {
+        nameof(PieceTable.SetSelected),
+        nameof(PieceTable.LeftPiece),
+        nameof(PieceTable.RightPiece),
+        nameof(PieceTable.DownPiece),
+        nameof(PieceTable.UpPiece),
+        nameof(PieceTable.NextCategory),
+        nameof(PieceTable.PrevCategory),
+        nameof(PieceTable.SetCategory)
+      }) yield return AccessTools.Method(type, methodName);
   }
-}
-// This is invasive but simplifies the mod when normal selection can be handled the same way.
-[HarmonyPatch(typeof(PieceTable), nameof(PieceTable.SetCategory))]
-public class PieceTableSetCategory
-{
-  static void Prefix() => Selection.Clear();
-  static void Postfix(PieceTable __instance)
-  {
-    var index = __instance.GetSelectedIndex();
-    var piece = __instance.GetPiece((int)__instance.m_selectedCategory, index);
-    if (piece && piece.GetComponent<ZNetView>())
-      Selection.CreateGhost(new ObjectSelection(piece, false));
-  }
-}
-[HarmonyPatch(typeof(PieceTable), nameof(PieceTable.PrevCategory))]
-public class PieceTablePrevCategory
-{
-  static void Prefix() => Selection.Clear();
-  static void Postfix(PieceTable __instance)
-  {
-    var index = __instance.GetSelectedIndex();
-    var piece = __instance.GetPiece((int)__instance.m_selectedCategory, index);
-    if (piece && piece.GetComponent<ZNetView>())
-      Selection.CreateGhost(new ObjectSelection(piece, false));
-  }
-}
-[HarmonyPatch(typeof(PieceTable), nameof(PieceTable.NextCategory))]
-public class PieceTableNextCategory
-{
   static void Prefix() => Selection.Clear();
   static void Postfix(PieceTable __instance)
   {
